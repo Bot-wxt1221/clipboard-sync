@@ -25,7 +25,8 @@ jobs:
         git pull remote master --rebase
         git config --local user.email "3264117476@qq.com"
         git config --local user.name "github-actions[bot]"
-        git commit -a -m "Update flakes"
+        git add .
+        git commit -m "Update flakes"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
