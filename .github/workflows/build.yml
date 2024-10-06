@@ -21,12 +21,12 @@ jobs:
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix build .#default
     - run: |
-        git remote add remote https://github.com/Bot-wxt1221/clipboard-sync.git
-        git pull remote master --rebase
         git config --local user.email "3264117476@qq.com"
         git config --local user.name "github-actions[bot]"
         git add .
         git commit -m "Update flakes"
+        git remote add remote https://github.com/Bot-wxt1221/clipboard-sync.git
+        git pull remote master --rebase
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
