@@ -31,6 +31,24 @@ sudo wget -P /etc/apt/sources.list.d/ https://raw.githubusercontent.com/dnut/deb
 sudo apt update && sudo apt install clipboard-sync
 ```
 
+### Fedora & CentOS
+We don't have a repository yet, but you can build an RPM and install it.
+
+```bash
+# clone the repo
+git clone https://github.com/dnut/clipboard-sync.git
+cd clipboard-sync
+
+# install the build dependencies
+sudo dnf install rpm-build rpmdevtools libxcb-devel systemd-rpm-macros rust cargo
+
+# build the package
+make rpm
+
+# install the package (you may want to specify the explicit path in case there are dupes)
+sudo dnf install ~/rpmbuild/RPMS/*/clipboard-sync-0*.rpm
+```
+
 ## Advanced Installation
 If your system is not supported, you have two other options:
 - [Generic Linux](#generic-linux)
