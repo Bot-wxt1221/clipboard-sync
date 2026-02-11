@@ -30,6 +30,35 @@ Install from the official repository:
 sudo wget -P /etc/apt/sources.list.d/ https://raw.githubusercontent.com/dnut/deb/master/dnut.list
 sudo apt update && sudo apt install clipboard-sync
 ```
+You can also manually [build and install a deb package from source](#deb-package).
+
+### Fedora & CentOS
+We don't have a repository yet, but you can build an RPM and install it.
+
+```bash
+# clone the repo
+git clone https://github.com/dnut/clipboard-sync.git
+cd clipboard-sync
+
+# install the build dependencies
+sudo dnf install rpm-build rpmdevtools libxcb-devel systemd-rpm-macros rust cargo
+
+# build the package
+make rpm
+
+# install the package (you may want to specify the explicit path in case there are dupes)
+sudo dnf install ~/rpmbuild/RPMS/*/clipboard-sync-0*.rpm
+```
+
+### NixOS
+Add this repo to your flake inputs:
+```nix
+clipboard-sync.url = "github:dnut/clipboard-sync";
+```
+
+Put `clipboard-sync.nixosModules.default` into flake modules.
+
+To enable the systemd service, add `services.clipboard-sync.enable = true;` into the `configuration.nix`.
 
 ## Advanced Installation
 If your system is not supported, you have two other options:
@@ -70,22 +99,6 @@ It can be easily uninstalled:
 cargo uninstall clipboard-sync
 rm -r "$HOME/.config/systemd/clipboard-sync.service"
 ```
-
-### Ubuntu & Debian (advanced)
-In addition to installing from the official repository, you can also build and install the deb package from source. Follow the instructions to [Build from Source](#build-from-source), then create a deb file and install it with:
-```bash
-make deb && sudo apt install ./dist/deb/clipboard-sync_*.deb
-```
-
-### NixOS
-Add this repo to your flake inputs:
-```nix
-clipboard-sync.url = "github:dnut/clipboard-sync";
-```
-
-Put `clipboard-sync.nixosModules.default` into flake modules.
-
-To enable the systemd service, add `services.clipboard-sync.enable = true;` into the `configuration.nix`.
 
 # Usage
 The typical set-and-forget approach is to enable to service:
@@ -130,4 +143,14 @@ make
 The executable is here:
 ```bash
 ./target/release/clipboard-sync
+```
+
+### Deb package
+In addition to installing from the official repository for Debian and Ubuntu, you can also build and install the deb package from source. Follow the instructions above, then you can simple create a deb package with a single command.
+```bash
+# build
+make deb
+
+# install
+sudo apt install ./dist/deb/clipboard-sync_*.deb
 ```
