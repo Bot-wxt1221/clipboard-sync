@@ -1,8 +1,8 @@
 {
   pkgs ? import <nixpkgs> { },
 }:
-pkgs.rustPlatform.buildRustPackage rec {
-  buildInputs = with pkgs; [ xorg.libxcb ];
+pkgs.rustPlatform.buildRustPackage {
+  buildInputs = with pkgs; [ ibxcb ];
 
   pname = "clipboard-sync";
   version = "0.2.0";
